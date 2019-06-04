@@ -1,0 +1,239 @@
+{% extends 'falsifier/user_homepage.html' %} {% block bodk%} {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'falsifier/style_table.css' %} " />
+<style>
+    #tbox {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        height: 30px;
+    }
+</style>
+
+<form action="{% url 'falsifier:search' %}" method="POST">
+    {% csrf_token %} List of Key words:
+    <br>
+    <input id="tbox" {{ form.listofkeywords }} <br> 
+    {{ check_keywords }}<br>
+    Search URL:
+
+    <input id="tbox" type="text" {{ form.searchURL }} 
+    {{invalid_url}}
+    
+    <br>
+
+    <input type="submit" value="OK">
+    
+
+</form>
+<div>
+    {{searchCriteriaFormInput}}
+</div>
+
+{% if submission_url %}
+
+<div>
+    <center>
+
+
+        <h3>Submitted URL</h3>
+        <a href="{{submission_url}}" target="_blank">{{submission_url}}</a>
+        <br>
+        <br>
+
+        <table>
+            <tr>
+                <th>Analysis </th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td> Total Word Count </td>
+                <td> {{submission_results.totalWordCount}}</td>
+            </tr>
+            <tr>
+                <td> Sum of Keywords </td>
+                <td> {{submission_results.sumOfWordCount}}</td>
+            </tr>
+
+            <tr>
+                <td> Word Occurence % </td>
+                <td>{{submission_results.occurrence_percent}}</td>
+            </tr>
+        </table>
+
+        <br>
+        <h4> Keyword Analysis</h4>
+
+        <table>
+            <tr>
+                <th>Keyword</th>
+                <th>Count</th>
+            </tr>
+            {% for k in submission_results.keyword_match_results %}
+            <tr>
+                <td>{{k.0}}</td>
+                <td>{{k.1}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h4> Alexa Results</h4>
+
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Score</th>
+            </tr>
+
+            {% for result in alexa%}
+
+            <tr>
+                <td>{{result.0}}</td>
+                <td>{{result.1}}</td>
+            </tr>
+
+
+
+            {% endfor%}
+        </table>
+
+        <h2> Search Engine Results</h2>
+        <br>
+        <h4> Bloomberg Results</h4>
+        <br>
+
+        <br> {% for item in bloomberg_results %} {% with forloop.counter0 as outer_counter %}
+        <a href="{{item.1}}"  target="_blank"> {{item.1}} </a>
+        <br>
+        <br>
+
+
+
+        <table>
+            <tr>
+                <th>Analysis</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td> Total Word Count </td>
+                <td> {{item.0.totalWordCount}}</td>
+            </tr>
+            <tr>
+                <td> Sum of Keywords </td>
+                <td> {{item.0.sumOfWordCount}}</td>
+            </tr>
+
+            <tr>
+                <td> Word Occurence % </td>
+                <td>{{item.0.occurrence_percent}}</td>
+            </tr>
+
+        </table>
+        <br>
+
+        <table>
+            <tr>
+                <th>Keyword</th>
+                <th>Count</th>
+            </tr>
+            {% endwith %} {% for a in item.0.keyword_match_results %}
+
+            <tr>
+                <td>{{a.0}}</td>
+                <td>{{a.1}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+
+        {% endfor %}
+
+
+       <!-- <br> {{bloomberg_results}}-->
+        <br>
+        <h4>Reuters Results</h4>
+
+        <br>
+        <!--    {{reuters_results.0.0.totalWordCount}}
+            {{reuters_results.0.1}}-->
+        <!--<br> {{reuters_results.0.0}}-->
+
+        <!--{{reuters_results}}-->
+
+        <br>
+        <br> {% for item in reuters_results %} {% with forloop.counter0 as outer_counter %}
+        <a href="{{item.1}}"  target="_blank"> {{item.1}} </a>
+        <br>
+        <br>
+
+
+
+        <table>
+            <tr>
+                <th>Analysis</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td> Total Word Count </td>
+                <td> {{item.0.totalWordCount}}</td>
+            </tr>
+            <tr>
+                <td> Sum of Keywords </td>
+                <td> {{item.0.sumOfWordCount}}</td>
+            </tr>
+
+            <tr>
+                <td> Word Occurence % </td>
+                <td>{{item.0.occurrence_percent}}</td>
+            </tr>
+
+        </table>
+        <br>
+
+        <table>
+            <tr>
+                <th>Keyword</th>
+                <th>Count</th>
+            </tr>
+            {% endwith %} {% for a in item.0.keyword_match_results %}
+
+            <tr>
+                <td>{{a.0}}</td>
+                <td>{{a.1}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+
+        {% endfor %}
+        <!--          {{forloop.counter0}}: {{item}}
+                {% with  forloop.counter0 as outer_counter %}  
+                {{outer_counter}}<br>
+
+                 <a>{{item.1}} </a>
+                <br>
+
+                {% for i in item.0 %}
+
+                    {{i}}
+                    
+
+                    {% with forloop.counter0 as inner_counter %} 
+
+                    <br>
+                    <br>
+                    
+                    
+    
+                    {% endwith %}
+                {% endfor %}
+                {% endwith %} 
+                -->
+
+    </center>
+</div>
+{% endif %}
+{% endblock %}
+</div>

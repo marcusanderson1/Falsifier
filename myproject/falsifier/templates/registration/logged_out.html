@@ -1,0 +1,11 @@
+{% extends "falsifier/base.html" %}
+
+{% block bodk %}
+<p>Logged out!</p>  
+
+<a href="{% url 'login'%}">Click here to login again.</a>
+{% endblock %}
+
+{% block navbarblock %}
+    <a class="navbar-brand" href="{% url 'falsifier:index'%}">Falsifier</a>
+{% endblock %}
