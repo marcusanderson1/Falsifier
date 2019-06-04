@@ -1,7 +1,5 @@
 # Falsifier
-This project is a web application made using the Django Framework. This application was created as a solution to the widespread issue
-of fake news and its purpose is to evaluate the truth of a web article less than 24 hours old by cross-referencing searches among two trusted 
-news sources.
+This project is a web application made using the pyhton language and hosted using the Django web development framework. This application was created as a solution to the widespread issue of fake news and its purpose is to evaluate the truth of a web article less than 24 hours old by cross-referencing searches among two trusted news sources.
 
 The project is designed to take a link to a webpage (preferably an article) and five descriptive key words as input:
 
